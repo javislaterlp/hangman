@@ -1,5 +1,6 @@
 var fails = 0;
 var time = 100;
+var t;
 
 window.onload = function () {
   loadButtons();
@@ -7,6 +8,7 @@ window.onload = function () {
   loadControl();
   displayFails();
   displayTime();
+  clearCanvas();
 };
 
 ///////////////////////// Init ////////////////////////////
@@ -77,7 +79,7 @@ function play() {
 }
 
 function timer() {
-  var t = setInterval(function () {
+  t = setInterval(function () {
     displayTime(--time);
 
     if (time <= 10) {
@@ -109,13 +111,13 @@ function reset() {
   clearCanvas();
   clearButtons();
   clearInput();
-  //clearTimeout(t);
+  clearTimeout(t);
 }
 
 function clearCanvas() {
-  var canvas = $("#draw");
-  var context = canvas[0].getContext("2d");
-  context.clearRect(0, 0, canvas[0].width, canvas[0].height);
+  var context = drawHangman();
+  context.clearRect(0, 0, 300, 300);
+  drawPost();
 }
 
 function clearButtons() {
@@ -140,19 +142,11 @@ function clearInput() {
 function drawHangman() {
   var canvas = $("#draw");
   var context = canvas[0].getContext("2d");
-
-  drawPost(context);
-  drawHead(context);
-  drawBody(context);
-  drawLeftArm(context);
-  drawRightArm(context);
-  drawChest(context);
-  drawLeftLeg(context);
-  drawRightLeg(context)
-  
+  return context;
 }
 
-function drawPost(c) {
+function drawPost() {
+  var c = drawHangman();
   c.beginPath();
   c.lineWidth = "5";
   c.moveTo(20, 296);
@@ -168,7 +162,8 @@ function drawPost(c) {
   c.stroke();
 }
 
-function drawHead(c) {
+function drawHead() {
+  var c = drawHangman();
   var img = new Image();
   img.onload = function () {
     c.drawImage(img, 124, 74, 52, 52);
@@ -176,49 +171,47 @@ function drawHead(c) {
   img.src = "img/sadface.png";
 }
 
-function drawBody(c) {
+function drawBody() {
+  var c = drawHangman();
   c.beginPath();
   c.moveTo(150, 125);
-  c.lineTo(150, 135);
+  c.lineTo(150, 190);
   c.stroke();
 }
 
-function drawLeftArm(c) {
+function drawLeftArm() {
+  var c = drawHangman();
   c.beginPath();
   c.moveTo(150, 135);
   c.lineTo(125, 165);
   c.stroke();
 }
 
-function drawRightArm(c) {
+function drawRightArm() {
+  var c = drawHangman();
   c.beginPath();
   c.moveTo(150, 135);
   c.lineTo(175, 165);
   c.stroke();
 }
 
-function drawChest(c) {
-  c.beginPath();
-  c.moveTo(150, 135);
-  c.lineTo(150, 190);
-  c.stroke();
-
-}
-
-function drawLeftLeg(c) {
+function drawLeftLeg() {
+  var c = drawHangman();
   c.beginPath();
   c.moveTo(150, 190);
   c.lineTo(135, 240);
   c.stroke();
 }
 
-function drawRightLeg(c) {
+function drawRightLeg() {
+  var c = drawHangman();
   c.beginPath();
   c.moveTo(150, 190);
   c.lineTo(165, 240);
   c.stroke();
 }
 
+///////////////////////// Search API //////////////////////
 /*function search() {
   var words = ["tontos", "anillos", "fatal", "avatar"];
   var query = words[Math.floor(Math.random() * words.length)];
