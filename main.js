@@ -1,5 +1,5 @@
 var fails = 0;
-var time = 12;
+var time = 100;
 
 window.onload = function () {
   loadButtons();
@@ -90,6 +90,69 @@ function timer() {
       console.log("perdiste");
     }
   }, 1000);
+}
+
+function drawHangman() {
+  var canvas = $("#draw");
+  var context = canvas[0].getContext("2d");
+
+  /////// post //////////
+  context.beginPath();
+  context.lineWidth = "5";
+  context.moveTo(20, 298);
+  context.lineTo(20, 50);
+  
+  context.lineTo(200, 50);
+  context.stroke();
+
+  context.beginPath();
+  context.lineWidth = "1";
+  context.moveTo(150, 50);
+  context.lineTo(150, 75);
+  context.stroke();
+
+  //////// head ///////////
+  var img = new Image();
+  img.onload = function () {
+    context.drawImage(img, 124, 74, 52, 52);
+  }
+  img.src = "img/sadface.png";
+
+  //////// body ///////////
+  context.beginPath();
+  context.moveTo(150, 125);
+  context.lineTo(150, 135);
+  context.stroke();
+
+  //left arm
+  context.beginPath();
+  context.moveTo(150, 135);
+  context.lineTo(125, 165);
+  context.stroke();
+
+  //right arm
+  context.beginPath();
+  context.moveTo(150, 135);
+  context.lineTo(175, 165);
+  context.stroke();
+
+  //chest
+  context.beginPath();
+  context.moveTo(150, 135);
+  context.lineTo(150, 190);
+  context.stroke();
+
+  //left leg
+  context.beginPath();
+  context.moveTo(150, 190);
+  context.lineTo(135, 240);
+  context.stroke();
+
+  //right leg
+  context.beginPath();
+  context.moveTo(150, 190);
+  context.lineTo(165, 240);
+  context.stroke();
 }
 
 /*function search() {
