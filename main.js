@@ -1,61 +1,104 @@
 var fails = 0;
+var time = 12;
 
-window.onload = function() {
+window.onload = function () {
   loadButtons();
   loadInput();
+  displayFails();
+  displayTime();
 };
 
-var loadButtons = function() {
-  var container = document.getElementById("alphabet");
-  
-  var list = document.createElement('ul');
+var loadButtons = function () {
+  var container = $("#alphabet");
+
+  var list = $("<ul>");
 
   for (var code = 65; code <= 90; code++) {
     var letter = String.fromCharCode(code);
-    var li = document.createElement('li');
-    li.id = letter;
-    li.innerHTML = letter;
-    li.addEventListener("click", play);
-    list.appendChild(li);
+    var li = $("<li>");
+    li.attr("id", letter);
+    li.html(letter);
+    li.on("click", play);
+    list.append(li);
   }
 
-  container.appendChild(list);
+  container.append(list);
 };
 
-var loadInput = function() {
+var loadInput = function () {
   var words = ["PIZZA", "RAMEN", "BURGER", "BEEF", "PASTA"];
-  var word = words[Math.floor(Math.random()*words.length)];
+  var word = words[Math.floor(Math.random() * words.length)];
   word = word.split("");
 
-  var container = document.getElementById('input');
+  var container = $("#input");
 
-  var list = document.createElement('ul');
+  var list = $("<ul>");
 
   for (var letter of word) {
-    var li = document.createElement('li');
-    li.className = letter;
-    li.innerHTML = "";
-    list.appendChild(li);
+    var li = $("<li>");
+    li.addClass(letter);
+    list.append(li);
   }
 
-  container.appendChild(list);
+  container.append(list);
 };
 
 function play() {
-  var letters = document.querySelectorAll('#input ul li');
+  var letters = $("#input ul li");
   var fail = true;
-  
-  for (var i in letters) {
-    if (this.id == letters[i].className) {
-      letters[i].innerHTML = this.id;
+  var button = this;
+
+  letters.each(function () {
+    if (button.id == $(this).attr("class")) {
+      $(this).html(button.id);
       fail = false;
     }
-  }
+  });
 
   if (fail) {
-    console.log(++fails);
+    displayFails(++fails);
+    $(this).css("opacity", "0.3");
+  } else {
+    $(this).css("background-color", "#FFEB3B");
+    $(this).css("color", "black");
   }
 
-  this.removeEventListener("click", play);
-  this.style.opacity = 0.5;
+  $(this).off("click", play);
 }
+
+function displayFails() {
+  $("#fails").html("Fails: " + fails);
+}
+
+function displayTime() {
+  $("#timer span").html(time + "s");
+  
+  $("#start").on("click", timer);
+}
+
+function timer() {
+  var t = setInterval(function () {
+    time--;
+    $("#timer span").html(time + "s");
+
+    if (time <= 10) {
+      $("#timer span").css("color", "#F44336");
+    } 
+    
+    if (time < 1) {
+      clearTimeout(t);
+      console.log("perdiste");
+    }
+  }, 1000);
+}
+
+/*function search() {
+  var words = ["tontos", "anillos", "fatal", "avatar"];
+  var query = words[Math.floor(Math.random() * words.length)];
+  console.log(query);
+
+  $.getJSON("http://www.omdbapi.com/?t=" + query + "&type=movie").then(function(response){
+    console.log(response);
+    console.log(response.Title);
+  });
+}*/
