@@ -9,6 +9,8 @@ window.onload = function () {
   displayTime();
 };
 
+///////////////////////// Init ////////////////////////////
+
 var loadButtons = function () {
   var container = $("#alphabet");
 
