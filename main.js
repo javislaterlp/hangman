@@ -1,11 +1,14 @@
 var fails = 0;
-var time = 100;
+var wins;
+var loses;
+var time = 10;
 var t;
 
 window.onload = function () {
   loadButtons();
   loadInput();
   loadControl();
+  loadGame();
   displayFails();
   displayTime();
   clearCanvas();
@@ -51,7 +54,7 @@ var loadInput = function () {
 var loadControl = function () {
   $("#reset").on("click", reset);
   $("#start").on("click", timer);
-}
+};
 
 ///////////////////////// Game Control ////////////////////
 
@@ -79,6 +82,29 @@ function play() {
   $(this).off("click", play);
 }
 
+function saveGame() {
+  localStorage.setItem("wins", wins);
+  localStorage.setItem("loses", loses);
+}
+
+function loadGame() {
+  var balance = [localStorage.getItem("wins"), localStorage.getItem("loses")];
+  wins = balance[0] ? balance[0] : 0;
+  loses = balance[1] ? balance[1] : 0;
+}
+
+function win() {
+  alert("Has ganado");
+  wins++;
+  saveGame();
+}
+
+function lose() {
+  alert("Has perdido");
+  loses++;
+  saveGame();
+}
+
 function timer() {
   t = setInterval(function () {
     displayTime(--time);
@@ -88,6 +114,7 @@ function timer() {
     } 
     
     if (time < 1) {
+      lose();
       clearTimeout(t);
     }
   }, 1000);
@@ -102,7 +129,7 @@ function displayTime() {
 }
 
 function drawFail(fails) {
-  var failArray = [drawHead, drawChest, drawBody, drawLeftArm, drawRightArm, drawLeftLeg, drawRightLeg];
+  var failArray = [drawHead, drawChest, drawBody, drawLeftArm, drawRightArm, drawLeftLeg, drawRightLeg, lose];
   var drawing = failArray[fails - 1];
   if (drawing) {
     drawing();

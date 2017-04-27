@@ -8,10 +8,10 @@ body {
   background-color: #616161;
   color: white;
   font-family: 'Roboto', sans-serif;
+  text-align: center;
 }
 
-#game {
-  text-align: center;
+#game, #login {
   width: 100%;
   padding-bottom: 20px;
 }
@@ -32,7 +32,7 @@ a {
   color: white;
 }
 
-/* buttons */
+/*** buttons ***/
 
 #alphabet ul li {
   background-color: #009688;
@@ -52,7 +52,7 @@ a {
   transform:scale(1.2,1.2);
 }
 
-/* input */
+/*** input ***/
 
 #input {
   margin-top: 20px;
@@ -63,6 +63,7 @@ a {
 }
 
 #input ul li {
+  font-size: 25px;
   list-style: none;
   width: 30px;
   height: 30px;
@@ -70,7 +71,7 @@ a {
   border-bottom: 1px solid #FFEB3B;
 }
 
-/* count */
+/*** count ***/
 
 #count {
   margin-top: 20px;
@@ -83,7 +84,7 @@ a {
   margin: 5px 10px;
 }
 
-/* controls */
+/*** controls ***/
 
 #start, #reset {
   border-radius: 5px;
@@ -100,7 +101,7 @@ a {
   background-color: #607D8B;
 }
 
-/* hangman */
+/*** hangman ***/
 
 #hangman {
   margin: 20px auto;
