@@ -69,6 +69,7 @@ function play() {
 
   if (fail) {
     displayFails(++fails);
+    drawFail(fails);
     $(this).css("opacity", "0.3");
   } else {
     $(this).css("background-color", "#FFEB3B");
@@ -98,6 +99,14 @@ function displayFails() {
 
 function displayTime() {
   $("#timer span").html(time + "s");
+}
+
+function drawFail(fails) {
+  var failArray = [drawHead, drawChest, drawBody, drawLeftArm, drawRightArm, drawLeftLeg, drawRightLeg];
+  var drawing = failArray[fails - 1];
+  if (drawing) {
+    drawing();
+  }
 }
 
 ///////////////////////// Reset Game //////////////////////
@@ -171,10 +180,18 @@ function drawHead() {
   img.src = "img/sadface.png";
 }
 
-function drawBody() {
+function drawChest() {
   var c = drawHangman();
   c.beginPath();
   c.moveTo(150, 125);
+  c.lineTo(150, 135);
+  c.stroke();
+}
+
+function drawBody() {
+  var c = drawHangman();
+  c.beginPath();
+  c.moveTo(150, 135);
   c.lineTo(150, 190);
   c.stroke();
 }
